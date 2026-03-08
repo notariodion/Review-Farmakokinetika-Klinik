@@ -1,0 +1,1594 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Modul Farmakokinetika Klinik — Faktor-Faktor yang Memengaruhi Parameter Farmakokinetika</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,700;1,9..144,300;1,9..144,500&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0B1F3A;
+    --navy-mid: #132D52;
+    --teal: #1A7FA0;
+    --teal-light: #28A9CF;
+    --gold: #C8A96E;
+    --gold-light: #E8CB94;
+    --cream: #F7F2E8;
+    --cream-dark: #EDE5D4;
+    --white: #FDFBF7;
+    --text-dark: #1A1A2E;
+    --text-body: #2D3A4A;
+    --text-muted: #5A6B7D;
+    --red-accent: #C0392B;
+    --green-accent: #1A6B45;
+    --sidebar-w: 280px;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--text-body);
+    line-height: 1.75;
+    display: flex;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ─── SIDEBAR ─── */
+  .sidebar {
+    width: var(--sidebar-w);
+    min-height: 100vh;
+    background: var(--navy);
+    position: fixed;
+    top: 0; left: 0;
+    display: flex;
+    flex-direction: column;
+    z-index: 100;
+    overflow-y: auto;
+    box-shadow: 4px 0 32px rgba(0,0,0,0.3);
+  }
+
+  .sidebar-header {
+    padding: 32px 24px 20px;
+    border-bottom: 1px solid rgba(200,169,110,0.3);
+  }
+
+  .sidebar-logo {
+    font-family: 'Fraunces', serif;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 8px;
+    display: block;
+  }
+
+  .sidebar-title {
+    font-family: 'Fraunces', serif;
+    font-size: 17px;
+    font-weight: 500;
+    color: var(--white);
+    line-height: 1.3;
+  }
+
+  .sidebar-nav { padding: 16px 0 40px; }
+
+  .nav-section-label {
+    font-size: 9px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: rgba(200,169,110,0.6);
+    padding: 16px 24px 6px;
+    font-weight: 600;
+  }
+
+  .nav-item {
+    display: block;
+    padding: 9px 24px 9px 28px;
+    color: rgba(253,251,247,0.7);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 400;
+    border-left: 3px solid transparent;
+    transition: all 0.2s ease;
+    line-height: 1.35;
+  }
+
+  .nav-item:hover,
+  .nav-item.active {
+    color: var(--gold-light);
+    border-left-color: var(--gold);
+    background: rgba(200,169,110,0.08);
+  }
+
+  .nav-item.sub {
+    padding-left: 40px;
+    font-size: 12px;
+    color: rgba(253,251,247,0.5);
+  }
+
+  .nav-item.sub:hover, .nav-item.sub.active {
+    color: var(--gold-light);
+  }
+
+  /* ─── MAIN CONTENT ─── */
+  .main {
+    margin-left: var(--sidebar-w);
+    flex: 1;
+    min-width: 0;
+  }
+
+  /* ─── HERO ─── */
+  .hero {
+    background: var(--navy);
+    position: relative;
+    overflow: hidden;
+    padding: 80px 64px 72px;
+    min-height: 420px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -60px; right: -80px;
+    width: 500px; height: 500px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(26,127,160,0.25) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: -100px; left: 40%;
+    width: 300px; height: 300px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(200,169,110,0.15) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(200,169,110,0.15);
+    border: 1px solid rgba(200,169,110,0.4);
+    color: var(--gold-light);
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    padding: 6px 14px;
+    border-radius: 2px;
+    margin-bottom: 28px;
+    width: fit-content;
+    font-weight: 500;
+  }
+
+  .hero-badge::before {
+    content: '';
+    width: 6px; height: 6px;
+    background: var(--gold);
+    border-radius: 50%;
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.7); }
+  }
+
+  .hero-overline {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--teal-light);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+
+  .hero-title {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(28px, 4vw, 48px);
+    font-weight: 700;
+    color: var(--white);
+    line-height: 1.1;
+    margin-bottom: 8px;
+  }
+
+  .hero-subtitle {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(16px, 2.5vw, 22px);
+    font-weight: 300;
+    font-style: italic;
+    color: var(--gold-light);
+    margin-bottom: 28px;
+  }
+
+  .hero-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    padding-top: 24px;
+  }
+
+  .hero-meta-item {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .hero-meta-label {
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(253,251,247,0.4);
+    font-weight: 600;
+  }
+
+  .hero-meta-value {
+    font-size: 13px;
+    color: rgba(253,251,247,0.85);
+    font-weight: 400;
+  }
+
+  /* ─── CONTENT WRAPPER ─── */
+  .content-wrapper {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 64px 64px 120px;
+  }
+
+  /* ─── PROGRESS BAR ─── */
+  .progress-bar {
+    position: fixed;
+    top: 0; left: var(--sidebar-w);
+    right: 0; height: 3px;
+    background: transparent;
+    z-index: 99;
+  }
+
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--teal), var(--gold));
+    width: 0%;
+    transition: width 0.1s ease;
+  }
+
+  /* ─── SECTIONS ─── */
+  .section {
+    margin-bottom: 72px;
+    opacity: 0;
+    transform: translateY(24px);
+    animation: fadeUp 0.6s ease forwards;
+  }
+
+  @keyframes fadeUp {
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .section:nth-child(1) { animation-delay: 0.1s; }
+  .section:nth-child(2) { animation-delay: 0.2s; }
+  .section:nth-child(3) { animation-delay: 0.3s; }
+  .section:nth-child(4) { animation-delay: 0.4s; }
+  .section:nth-child(5) { animation-delay: 0.5s; }
+
+  .section-number {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin-bottom: 8px;
+    font-weight: 500;
+  }
+
+  h1.section-title {
+    font-family: 'Fraunces', serif;
+    font-size: 30px;
+    font-weight: 700;
+    color: var(--navy);
+    line-height: 1.15;
+    margin-bottom: 6px;
+    padding-bottom: 14px;
+    border-bottom: 2px solid var(--navy);
+    position: relative;
+  }
+
+  h1.section-title::after {
+    content: '';
+    position: absolute;
+    bottom: -2px; left: 0;
+    width: 48px; height: 4px;
+    background: var(--gold);
+  }
+
+  h2.subsection-title {
+    font-family: 'Fraunces', serif;
+    font-size: 20px;
+    font-weight: 500;
+    color: var(--navy-mid);
+    margin: 36px 0 12px;
+    padding-left: 14px;
+    border-left: 4px solid var(--teal);
+  }
+
+  h3.sub-subsection {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--navy);
+    margin: 24px 0 8px;
+    letter-spacing: 0.01em;
+  }
+
+  p {
+    font-size: 15px;
+    line-height: 1.8;
+    color: var(--text-body);
+    margin-bottom: 14px;
+    text-align: justify;
+  }
+
+  /* ─── CALLOUT BOX ─── */
+  .callout {
+    background: linear-gradient(135deg, #EBF6FB 0%, #D4EEF8 100%);
+    border-left: 5px solid var(--teal);
+    border-radius: 0 8px 8px 0;
+    padding: 20px 24px;
+    margin: 24px 0;
+    position: relative;
+  }
+
+  .callout.gold {
+    background: linear-gradient(135deg, #FBF6EC 0%, #F3E8CC 100%);
+    border-left-color: var(--gold);
+  }
+
+  .callout.red {
+    background: linear-gradient(135deg, #FBF0EE 0%, #F2D9D6 100%);
+    border-left-color: var(--red-accent);
+  }
+
+  .callout.green {
+    background: linear-gradient(135deg, #EBF5EF 0%, #CBE8D6 100%);
+    border-left-color: var(--green-accent);
+  }
+
+  .callout-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--teal);
+    font-weight: 500;
+    margin-bottom: 6px;
+  }
+
+  .callout.gold .callout-label { color: var(--gold); }
+  .callout.red .callout-label { color: var(--red-accent); }
+  .callout.green .callout-label { color: var(--green-accent); }
+
+  .callout p { margin-bottom: 0; }
+
+  /* ─── FORMULA BOX ─── */
+  .formula-box {
+    background: var(--navy);
+    border-radius: 8px;
+    padding: 24px 32px;
+    margin: 20px 0;
+    text-align: center;
+  }
+
+  .formula {
+    font-family: 'DM Mono', monospace;
+    font-size: 16px;
+    color: var(--teal-light);
+    line-height: 2;
+    letter-spacing: 0.04em;
+  }
+
+  .formula span.var { color: var(--gold-light); font-style: italic; }
+
+  /* ─── LISTS ─── */
+  ul.styled, ol.styled {
+    margin: 12px 0 16px 0;
+    padding-left: 0;
+    list-style: none;
+  }
+
+  ul.styled li, ol.styled li {
+    padding: 7px 0 7px 26px;
+    font-size: 15px;
+    line-height: 1.65;
+    color: var(--text-body);
+    position: relative;
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+  }
+
+  ul.styled li:last-child, ol.styled li:last-child { border-bottom: none; }
+
+  ul.styled li::before {
+    content: '▸';
+    position: absolute;
+    left: 0;
+    color: var(--teal);
+    font-size: 12px;
+    top: 8px;
+  }
+
+  ol.styled { counter-reset: item; }
+
+  ol.styled li::before {
+    content: counter(item, decimal-leading-zero);
+    counter-increment: item;
+    position: absolute;
+    left: 0;
+    color: var(--teal);
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    top: 9px;
+  }
+
+  /* ─── TABLES ─── */
+  .table-wrap {
+    overflow-x: auto;
+    margin: 20px 0;
+    border-radius: 8px;
+    box-shadow: 0 4px 24px rgba(11,31,58,0.1);
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13.5px;
+    background: var(--white);
+  }
+
+  thead th {
+    background: var(--navy);
+    color: var(--white);
+    padding: 12px 16px;
+    text-align: left;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    font-size: 12px;
+    white-space: nowrap;
+  }
+
+  thead th:first-child { border-radius: 8px 0 0 0; }
+  thead th:last-child { border-radius: 0 8px 0 0; }
+
+  tbody tr { transition: background 0.15s; }
+  tbody tr:nth-child(even) td { background: rgba(26,127,160,0.04); }
+  tbody tr:hover td { background: rgba(200,169,110,0.08); }
+
+  tbody td {
+    padding: 11px 16px;
+    border-bottom: 1px solid rgba(0,0,0,0.06);
+    color: var(--text-body);
+    line-height: 1.5;
+  }
+
+  .tag-up { color: #1A6B45; font-weight: 600; font-size: 13px; }
+  .tag-down { color: #C0392B; font-weight: 600; font-size: 13px; }
+  .tag-neutral { color: #5A6B7D; font-size: 13px; }
+
+  /* ─── PARAMETER CARDS ─── */
+  .param-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 16px;
+    margin: 20px 0;
+  }
+
+  .param-card {
+    background: var(--white);
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 2px 12px rgba(11,31,58,0.08);
+    border-top: 4px solid var(--teal);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+
+  .param-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(11,31,58,0.14);
+  }
+
+  .param-card:nth-child(2) { border-top-color: var(--gold); }
+  .param-card:nth-child(3) { border-top-color: #9B59B6; }
+  .param-card:nth-child(4) { border-top-color: var(--red-accent); }
+  .param-card:nth-child(5) { border-top-color: var(--green-accent); }
+  .param-card:nth-child(6) { border-top-color: var(--navy); }
+
+  .param-symbol {
+    font-family: 'DM Mono', monospace;
+    font-size: 22px;
+    font-weight: 500;
+    color: var(--navy);
+    margin-bottom: 6px;
+  }
+
+  .param-name {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--teal);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 8px;
+  }
+
+  .param-desc {
+    font-size: 12.5px;
+    color: var(--text-muted);
+    line-height: 1.5;
+    margin-bottom: 8px;
+  }
+
+  .param-unit {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    background: var(--cream-dark);
+    color: var(--text-dark);
+    padding: 3px 8px;
+    border-radius: 3px;
+    display: inline-block;
+  }
+
+  /* ─── ACCORDION ─── */
+  .accordion { margin: 16px 0; }
+
+  .accordion-item {
+    border: 1px solid rgba(11,31,58,0.12);
+    border-radius: 8px;
+    margin-bottom: 8px;
+    overflow: hidden;
+    transition: box-shadow 0.2s;
+  }
+
+  .accordion-item:hover { box-shadow: 0 4px 16px rgba(11,31,58,0.1); }
+
+  .accordion-btn {
+    width: 100%;
+    background: var(--white);
+    border: none;
+    padding: 16px 20px;
+    text-align: left;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14.5px;
+    font-weight: 600;
+    color: var(--navy);
+    transition: background 0.2s;
+  }
+
+  .accordion-btn:hover { background: var(--cream); }
+  .accordion-btn.open { background: var(--navy); color: var(--white); }
+
+  .accordion-icon {
+    font-size: 18px;
+    transition: transform 0.3s, color 0.2s;
+    color: var(--teal);
+    min-width: 20px;
+    text-align: center;
+  }
+
+  .accordion-btn.open .accordion-icon {
+    transform: rotate(45deg);
+    color: var(--gold);
+  }
+
+  .accordion-body {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease, padding 0.3s;
+    background: #F9F6F0;
+  }
+
+  .accordion-body.open {
+    max-height: 800px;
+    padding: 20px;
+  }
+
+  /* ─── QUIZ ─── */
+  .quiz-item {
+    background: var(--white);
+    border-radius: 10px;
+    padding: 24px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 12px rgba(11,31,58,0.07);
+    border-left: 5px solid var(--navy);
+    transition: box-shadow 0.2s;
+  }
+
+  .quiz-item:hover { box-shadow: 0 6px 20px rgba(11,31,58,0.12); }
+
+  .quiz-number {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin-bottom: 8px;
+  }
+
+  .quiz-question {
+    font-size: 14.5px;
+    font-weight: 500;
+    color: var(--text-dark);
+    line-height: 1.7;
+    margin-bottom: 14px;
+  }
+
+  .quiz-answer {
+    background: var(--cream);
+    border-radius: 6px;
+    padding: 14px 16px;
+    font-size: 13.5px;
+    color: var(--text-body);
+    display: none;
+    line-height: 1.7;
+  }
+
+  .quiz-answer.revealed { display: block; animation: revealAns 0.3s ease; }
+
+  @keyframes revealAns {
+    from { opacity: 0; transform: translateY(-6px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .btn-reveal {
+    background: transparent;
+    border: 1.5px solid var(--teal);
+    color: var(--teal);
+    padding: 7px 18px;
+    border-radius: 4px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .btn-reveal:hover { background: var(--teal); color: var(--white); }
+
+  /* ─── REFERENCES ─── */
+  .ref-item {
+    display: grid;
+    grid-template-columns: 28px 1fr;
+    gap: 12px;
+    padding: 14px 0;
+    border-bottom: 1px solid rgba(0,0,0,0.07);
+    font-size: 13.5px;
+    line-height: 1.6;
+    color: var(--text-body);
+  }
+
+  .ref-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--teal);
+    padding-top: 2px;
+    font-weight: 500;
+  }
+
+  /* ─── GLOSSARY ─── */
+  .glossary-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin: 16px 0;
+  }
+
+  .glossary-item {
+    background: var(--white);
+    border-radius: 8px;
+    padding: 16px;
+    box-shadow: 0 1px 8px rgba(11,31,58,0.06);
+  }
+
+  .glossary-term {
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--navy);
+    margin-bottom: 6px;
+  }
+
+  .glossary-def {
+    font-size: 12.5px;
+    color: var(--text-muted);
+    line-height: 1.55;
+    margin: 0;
+  }
+
+  /* ─── MATRIX LEGEND ─── */
+  .legend {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-bottom: 16px;
+    background: var(--white);
+    padding: 12px 16px;
+    border-radius: 6px;
+    font-size: 13px;
+  }
+
+  .legend-item { display: flex; align-items: center; gap: 8px; }
+
+  /* ─── BACK TO TOP ─── */
+  .back-top {
+    position: fixed;
+    bottom: 32px;
+    right: 32px;
+    width: 44px; height: 44px;
+    background: var(--navy);
+    color: var(--gold);
+    border: none;
+    border-radius: 50%;
+    font-size: 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+    transition: all 0.2s;
+    opacity: 0;
+    pointer-events: none;
+    z-index: 90;
+  }
+
+  .back-top.visible { opacity: 1; pointer-events: auto; }
+  .back-top:hover { background: var(--teal); transform: translateY(-2px); }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 900px) {
+    .sidebar { transform: translateX(-100%); transition: transform 0.3s; }
+    .sidebar.open { transform: translateX(0); }
+    .main { margin-left: 0; }
+    .progress-bar { left: 0; }
+    .content-wrapper { padding: 40px 24px 80px; }
+    .hero { padding: 48px 24px 40px; }
+    .glossary-grid { grid-template-columns: 1fr; }
+    .menu-toggle { display: flex; }
+  }
+
+  .menu-toggle {
+    display: none;
+    position: fixed;
+    top: 16px; left: 16px;
+    z-index: 200;
+    background: var(--navy);
+    color: var(--gold);
+    border: none;
+    width: 40px; height: 40px;
+    border-radius: 6px;
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  }
+
+  /* APA reference style */
+  .apa-ref { font-size: 13.5px; line-height: 1.7; color: var(--text-body); text-indent: -24px; padding-left: 24px; margin-bottom: 12px; }
+  .apa-ref em { font-style: italic; }
+
+  /* Divider */
+  .divider {
+    display: flex; align-items: center; gap: 16px;
+    margin: 48px 0 32px;
+    color: var(--text-muted); font-size: 11px;
+    letter-spacing: 0.14em; text-transform: uppercase;
+  }
+  .divider::before, .divider::after {
+    content: ''; flex: 1; height: 1px; background: rgba(0,0,0,0.12);
+  }
+</style>
+</head>
+<body>
+
+<!-- Mobile toggle -->
+<button class="menu-toggle" onclick="toggleSidebar()" title="Menu">☰</button>
+
+<!-- Progress bar -->
+<div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+
+<!-- ─── SIDEBAR ─── -->
+<nav class="sidebar" id="sidebar">
+  <div class="sidebar-header">
+    <span class="sidebar-logo">Farmakokinetika Klinik · S1 Farmasi Sem. 5</span>
+    <div class="sidebar-title">Faktor Pemengaruh Parameter FK</div>
+  </div>
+  <div class="sidebar-nav">
+    <div class="nav-section-label">Pendahuluan</div>
+    <a href="#identitas" class="nav-item">Identitas &amp; Capaian</a>
+    <a href="#pendahuluan" class="nav-item">Pendahuluan</a>
+    <a href="#konsep" class="nav-item">Konsep Dasar Model 1-Komp.</a>
+
+    <div class="nav-section-label">Proses ADME</div>
+    <a href="#absorpsi" class="nav-item">Absorpsi</a>
+    <a href="#abs-fisiologis" class="nav-item sub">↳ Faktor Fisiologis</a>
+    <a href="#abs-patologis" class="nav-item sub">↳ Faktor Patologis</a>
+    <a href="#abs-farmasetik" class="nav-item sub">↳ Faktor Farmasetik</a>
+    <a href="#distribusi" class="nav-item">Distribusi</a>
+    <a href="#metabolisme" class="nav-item">Metabolisme</a>
+    <a href="#eliminasi" class="nav-item">Eliminasi</a>
+
+    <div class="nav-section-label">Rekapitulasi</div>
+    <a href="#matriks" class="nav-item">Matriks Faktor–Parameter</a>
+    <a href="#latihan" class="nav-item">Latihan Soal</a>
+    <a href="#referensi" class="nav-item">Referensi (APA)</a>
+    <a href="#glosarium" class="nav-item">Glosarium</a>
+  </div>
+</nav>
+
+<!-- ─── MAIN ─── -->
+<main class="main">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-badge">Modul Kuliah · Farmakokinetika Klinik</div>
+    <div class="hero-overline">S1 Farmasi · Semester 5</div>
+    <h1 class="hero-title">Faktor-Faktor yang Memengaruhi<br>Parameter Farmakokinetika</h1>
+    <p class="hero-subtitle">Absorpsi · Distribusi · Metabolisme · Eliminasi</p>
+    <div class="hero-meta">
+      <div class="hero-meta-item">
+        <span class="hero-meta-label">Mata Kuliah</span>
+        <span class="hero-meta-value">Farmakokinetika Klinik (FAR 501)</span>
+      </div>
+      <div class="hero-meta-item">
+        <span class="hero-meta-label">Beban SKS</span>
+        <span class="hero-meta-value">2 SKS (2 × 50 menit)</span>
+      </div>
+      <div class="hero-meta-item">
+        <span class="hero-meta-label">Taksonomi Bloom</span>
+        <span class="hero-meta-value">C1 – Mengingat</span>
+      </div>
+      <div class="hero-meta-item">
+        <span class="hero-meta-label">Model Farmakokinetika</span>
+        <span class="hero-meta-value">Satu Kompartemen</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTENT -->
+  <div class="content-wrapper">
+
+    <!-- 1. IDENTITAS -->
+    <section class="section" id="identitas">
+      <div class="section-number">Bagian 01</div>
+      <h1 class="section-title">Identitas &amp; Capaian Pembelajaran</h1>
+
+      <div class="table-wrap" style="margin-top:24px;">
+        <table>
+          <thead><tr><th>Komponen</th><th>Keterangan</th></tr></thead>
+          <tbody>
+            <tr><td>Nama Mata Kuliah</td><td>Farmakokinetika Klinik</td></tr>
+            <tr><td>Kode Mata Kuliah</td><td>FRS 308</td></tr>
+            <tr><td>Program Studi</td><td>S1 Farmasi</td></tr>
+            <tr><td>Semester</td><td>5 (Lima)</td></tr>
+            <tr><td>Beban SKS</td><td>2 SKS (2 × 50 menit)</td></tr>
+            <tr><td>Prasyarat</td><td>-</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 class="subsection-title">Kemampuan Akhir yang Diharapkan</h2>
+      <div class="callout green">
+        <div class="callout-label">🎯 Capaian Pembelajaran</div>
+        <p>Setelah mengikuti modul ini, mahasiswa mampu <strong>mengingat faktor-faktor yang memengaruhi parameter farmakokinetika utama</strong> yang berdampak secara klinis.</p>
+      </div>
+
+      <h2 class="subsection-title">Indikator Ketercapaian</h2>
+      <p>Mahasiswa mampu mengingat faktor-faktor yang memengaruhi proses <strong>absorpsi, distribusi, metabolisme, dan eliminasi</strong> obat yang berdampak secara klinis pada model farmakokinetika satu kompartemen.</p>
+
+      <h2 class="subsection-title">Kata Kerja Operasional (Taksonomi Bloom C1)</h2>
+      <ul class="styled">
+        <li>Menyebutkan faktor-faktor yang memengaruhi absorpsi, distribusi, metabolisme, dan eliminasi</li>
+        <li>Mendaftar kondisi klinis atau fisiologis yang berdampak pada parameter farmakokinetika</li>
+        <li>Mengidentifikasi parameter farmakokinetika yang terdampak pada model satu kompartemen</li>
+      </ul>
+    </section>
+
+    <!-- 2. PENDAHULUAN -->
+    <section class="section" id="pendahuluan">
+      <div class="section-number">Bagian 02</div>
+      <h1 class="section-title">Pendahuluan</h1>
+
+      <p>Farmakokinetika klinik adalah penerapan prinsip-prinsip farmakokinetika dalam penatalaksanaan terapi obat secara individual pada pasien. Dalam praktik klinik, respons pasien terhadap obat sangat bervariasi karena dipengaruhi oleh berbagai faktor fisiologis, patologis, dan farmakologis.</p>
+
+      <p>Parameter farmakokinetika utama—seperti konstanta laju absorpsi (kₐ), volume distribusi (Vd), klirens (Cl), dan waktu paruh (t½)—tidak bersifat tetap. Nilai parameter ini dapat berubah secara bermakna akibat kondisi pasien, penyakit penyerta, interaksi obat, dan faktor genetik.</p>
+
+      <div class="callout gold">
+        <div class="callout-label">💡 Relevansi Klinis</div>
+        <p>Seorang pasien geriatri dengan gagal ginjal kronik yang mendapat aminoglikosida memerlukan penyesuaian dosis yang berbeda dibandingkan pasien dewasa muda dengan fungsi ginjal normal. Tanpa pemahaman faktor-faktor yang memengaruhi parameter farmakokinetika, penyesuaian dosis yang tepat tidak dapat dilakukan — sehingga berisiko menimbulkan <strong>toksisitas</strong> atau <strong>kegagalan terapi</strong>.</p>
+      </div>
+    </section>
+
+    <!-- 3. KONSEP DASAR -->
+    <section class="section" id="konsep">
+      <div class="section-number">Bagian 03</div>
+      <h1 class="section-title">Konsep Dasar Model Satu Kompartemen</h1>
+
+      <p>Pada model satu kompartemen, tubuh diperlakukan sebagai satu unit homogen di mana obat terdistribusi secara instan dan merata. Parameter-parameter utama adalah:</p>
+
+      <div class="param-grid">
+        <div class="param-card">
+          <div class="param-symbol">kₐ</div>
+          <div class="param-name">Kons. Laju Absorpsi</div>
+          <div class="param-desc">Laju absorpsi obat dari tempat pemberian menuju sirkulasi sistemik</div>
+          <span class="param-unit">jam⁻¹ / menit⁻¹</span>
+        </div>
+        <div class="param-card">
+          <div class="param-symbol">Vd</div>
+          <div class="param-name">Volume Distribusi</div>
+          <div class="param-desc">Volume hipotetik cairan tempat obat seolah-olah terdistribusi merata</div>
+          <span class="param-unit">L atau L/kg</span>
+        </div>
+        <div class="param-card">
+          <div class="param-symbol">Cl</div>
+          <div class="param-name">Klirens</div>
+          <div class="param-desc">Volume plasma yang dibersihkan dari obat per satuan waktu</div>
+          <span class="param-unit">L/jam atau mL/menit</span>
+        </div>
+        <div class="param-card">
+          <div class="param-symbol">t½</div>
+          <div class="param-name">Waktu Paruh</div>
+          <div class="param-desc">Waktu yang dibutuhkan konsentrasi obat menurun 50%</div>
+          <span class="param-unit">jam / menit</span>
+        </div>
+        <div class="param-card">
+          <div class="param-symbol">Ke</div>
+          <div class="param-name">Kons. Eliminasi</div>
+          <div class="param-desc">Laju eliminasi obat dari kompartemen tubuh</div>
+          <span class="param-unit">jam⁻¹</span>
+        </div>
+        <div class="param-card">
+          <div class="param-symbol">F</div>
+          <div class="param-name">Bioavailabilitas</div>
+          <div class="param-desc">Fraksi dosis yang mencapai sirkulasi sistemik dalam bentuk utuh</div>
+          <span class="param-unit">% atau 0–1</span>
+        </div>
+      </div>
+
+      <h2 class="subsection-title">Hubungan Antar Parameter</h2>
+
+      <div class="formula-box">
+        <div class="formula"><span class="var">t½</span> = (0,693 × <span class="var">Vd</span>) / <span class="var">Cl</span></div>
+        <div class="formula"><span class="var">Ke</span> = <span class="var">Cl</span> / <span class="var">Vd</span> = 0,693 / <span class="var">t½</span></div>
+        <div class="formula">AUC = <span class="var">F</span> × Dosis / <span class="var">Cl</span></div>
+      </div>
+
+      <div class="callout">
+        <div class="callout-label">📌 Catatan Kunci</div>
+        <p>Perubahan pada <strong>Vd</strong> atau <strong>Cl</strong> — masing-masing atau bersama-sama — akan mengubah <strong>t½</strong>. Memahami faktor mana yang berubah penting agar penyesuaian dosis dilakukan secara rasional dan tepat sasaran.</p>
+      </div>
+    </section>
+
+    <!-- 4. ABSORPSI -->
+    <section class="section" id="absorpsi">
+      <div class="section-number">Bagian 04</div>
+      <h1 class="section-title">Faktor-Faktor yang Memengaruhi Absorpsi</h1>
+
+      <p>Absorpsi adalah proses perpindahan obat dari tempat pemberian ke sirkulasi sistemik. Parameter yang dipengaruhi: <strong>kₐ, F, dan t<sub>max</sub></strong>. Pada model satu kompartemen dengan pemberian oral, absorpsi umumnya mengikuti kinetika orde pertama.</p>
+
+      <h2 class="subsection-title" id="abs-fisiologis">4.1 Faktor Fisiologis</h2>
+
+      <div class="accordion" id="acc-absorpsi">
+        <div class="accordion-item">
+          <button class="accordion-btn" onclick="toggleAcc(this)">
+            <span>📊 pH Saluran Cerna</span>
+            <span class="accordion-icon">+</span>
+          </button>
+          <div class="accordion-body">
+            <p>pH lambung (1,0–2,5 pada kondisi puasa) dan usus halus (6,1 di duodenum –  7,5 di ileum) menentukan derajat ionisasi obat. Hanya bentuk tidak terionisasi (lipofilik) yang menembus membran dengan mudah (prinsip Henderson-Hasselbalch).</p>
+            <ul class="styled">
+              <li><strong>Obat asam lemah</strong> (aspirin, warfarin): absorpsi lebih baik di lambung (lebih banyak bentuk tidak terionisasi)</li>
+              <li><strong>Obat basa lemah</strong> (morfin, propranolol): absorpsi lebih baik di usus halus</li>
+              <li>Antasida, PPI, H2-bloker: meningkatkan pH lambung → mengubah absorpsi beberapa obat</li>
+            </ul>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <button class="accordion-btn" onclick="toggleAcc(this)">
+            <span>🔄 Motilitas Saluran Cerna</span>
+            <span class="accordion-icon">+</span>
+          </button>
+          <div class="accordion-body">
+            <p>Laju pengosongan lambung dan motilitas usus menentukan kecepatan obat mencapai tempat absorpsi utama (usus halus).</p>
+            <ul class="styled">
+              <li><strong>Motilitas meningkat</strong> (diare, metoklopramid): kontak mukosa berkurang → absorpsi menurun, kₐ meningkat</li>
+              <li><strong>Motilitas menurun</strong> (opioid, antikolinergik, gastroparesis DM): absorpsi lebih lambat, tmax memanjang</li>
+            </ul>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <button class="accordion-btn" onclick="toggleAcc(this)">
+            <span>🫀 Aliran Darah Splanknik</span>
+            <span class="accordion-icon">+</span>
+          </button>
+          <div class="accordion-body">
+            <ul class="styled">
+              <li>Absorpsi bergantung pada aliran darah di dinding usus</li>
+              <li><strong>Gagal jantung kongestif</strong>: perfusi usus menurun → absorpsi terganggu (mis. furosemid oral tidak efektif)</li>
+              <li>Makanan berlemak: meningkatkan aliran darah splanknik → absorpsi obat lipofilik meningkat</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <h2 class="subsection-title" id="abs-patologis">4.2 Faktor Patologis</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Kondisi Patologis</th><th>Mekanisme</th><th>Dampak pada Absorpsi</th></tr></thead>
+          <tbody>
+            <tr><td>Gagal jantung kongestif</td><td>Edema mukosa usus, penurunan perfusi</td><td>Absorpsi menurun (mis. furosemid oral)</td></tr>
+            <tr><td>Sindrom malabsorpsi</td><td>Kerusakan vili usus, defisiensi enzim</td><td>Absorpsi global menurun</td></tr>
+            <tr><td>Gastroparesis (DM)</td><td>Pengosongan lambung tertunda</td><td>kₐ menurun, t<sub>max</sub> memanjang</td></tr>
+            <tr><td>Penyakit Crohn</td><td>Peradangan &amp; ulserasi mukosa</td><td>Absorpsi bervariasi dan tidak menentu</td></tr>
+            <tr><td>Achlorhydria</td><td>pH lambung meningkat (>5)</td><td>Absorpsi basa lemah ↑, asam lemah ↓</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 class="subsection-title" id="abs-farmasetik">4.3 Faktor Farmasetik</h2>
+      <ul class="styled">
+        <li><strong>Bentuk sediaan</strong>: Larutan &gt; Suspensi &gt; Kapsul &gt; Tablet &gt; Tablet Salut Enterik (urutan kecepatan absorpsi)</li>
+        <li><strong>Mikronisasi / nanopartikel</strong>: memperbesar luas permukaan → disolusi dan absorpsi meningkat</li>
+        <li><strong>Polimorfisme kristal</strong>: bentuk amorf lebih mudah larut dari bentuk kristal</li>
+        <li><strong>Sediaan extended-release</strong>: kₐ sangat rendah (dirancang melepas obat bertahap)</li>
+      </ul>
+
+      <h2 class="subsection-title">4.4 Efek Lintas Pertama (First-Pass Effect)</h2>
+      <div class="callout">
+        <div class="callout-label">📚 Definisi</div>
+        <p>First-pass effect adalah metabolisme obat sebelum mencapai sirkulasi sistemik, terutama di dinding usus (CYP3A4) dan hati. Besarnya efek ini menentukan bioavailabilitas oral (F).</p>
+      </div>
+      <ul class="styled">
+        <li><strong>Obat first-pass ekstensif</strong>: propranolol (F ~25%), morfin (F ~30%), nitrogliserin (F &lt;10%)</li>
+        <li><strong>Induksi enzim</strong> (rifampisin, karbamazepin): first-pass meningkat → F menurun</li>
+        <li><strong>Inhibisi enzim</strong> (ketokonazol, grapefruit juice): first-pass menurun → F meningkat, risiko toksisitas</li>
+        <li><strong>Rute alternatif</strong> (sublingual, rektal, transdermal, IV): menghindari first-pass effect sepenuhnya</li>
+      </ul>
+    </section>
+
+    <!-- 5. DISTRIBUSI -->
+    <section class="section" id="distribusi">
+      <div class="section-number">Bagian 05</div>
+      <h1 class="section-title">Faktor-Faktor yang Memengaruhi Distribusi</h1>
+
+      <p>Distribusi adalah perpindahan obat dari sirkulasi sistemik ke jaringan dan organ. Parameter utama: <strong>Volume Distribusi (Vd)</strong>. Nilai Vd mencerminkan seberapa besar kapasitas tubuh mendistribusikan obat ke jaringan.</p>
+
+      <h2 class="subsection-title">5.1 Ikatan Protein Plasma</h2>
+
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Protein Plasma</th><th>Jenis Obat</th><th>Contoh Obat &amp; Persen Ikatan</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Albumin</strong> (normal 3,5–5 g/dL)</td><td>Obat asam dan netral</td><td>Warfarin (99%), Fenitoin (90%), Fenobarbital (50%)</td></tr>
+            <tr><td><strong>Alpha-1 Acid Glycoprotein</strong> (AAG)</td><td>Obat basa</td><td>Propranolol (90%), Lidokain (70%), Verapamil (90%)</td></tr>
+            <tr><td><strong>Lipoprotein</strong></td><td>Obat sangat lipofilik</td><td>Siklosporin, Amiodarone</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="callout red">
+        <div class="callout-label">⚠️ Contoh Klinis Penting — Fenitoin &amp; Hipoalbuminemia</div>
+        <p>Fenitoin terikat albumin 90%. Pada pasien sirosis dengan albumin 2,0 g/dL, kadar total fenitoin tampak rendah — namun fraksi bebas (aktif) bisa normal atau meningkat. Penyesuaian dosis tanpa koreksi berisiko menyebabkan <strong>toksisitas fenitoin</strong>. Gunakan <em>rumus koreksi Winter-Tozer</em> untuk interpretasi kadar yang akurat, namun tambahkan catatan keterbatasan pada pasien kritis.</p>
+      </div>
+
+      <h2 class="subsection-title">5.2 Lipofilisitas Obat</h2>
+      <ul class="styled">
+        <li><strong>Obat lipofilik</strong> (amiodarone, siklosporin, digoksin): Vd sangat besar (ratusan liter) → akumulasi jaringan lemak</li>
+        <li><strong>Obat hidrofilik</strong> (aminoglikosida, vankomisin): Vd kecil, terbatas di cairan ekstraselular</li>
+        <li>Vd besar: lebih sulit dialisis, butuh dosis muatan (loading dose) lebih besar, t½ lebih panjang</li>
+      </ul>
+
+      <h2 class="subsection-title">5.3 Pengaruh Kondisi Fisiologis &amp; Patologis pada Vd</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Kondisi</th><th>Perubahan Vd</th><th>Mekanisme</th></tr></thead>
+          <tbody>
+            <tr><td>Usia lanjut (≥65 thn)</td><td>↑ lipofilik; ↓ hidrofilik</td><td>Peningkatan proporsi lemak; penurunan massa otot &amp; cairan tubuh total</td></tr>
+            <tr><td>Neonatus</td><td>↑ (terutama hidrofilik)</td><td>Proporsi cairan ekstraselular sangat besar (45% BB)</td></tr>
+            <tr><td>Kehamilan (T2–T3)</td><td>↑</td><td>Hemodilusi, volume plasma meningkat 40–50%, kompartemen janin &amp; plasenta</td></tr>
+            <tr><td>Obesitas</td><td>↑↑ lipofilik</td><td>Akumulasi masif di jaringan lemak</td></tr>
+            <tr><td>Dehidrasi</td><td>↓ hidrofilik</td><td>Penurunan volume cairan tubuh total</td></tr>
+            <tr><td>Edema / asites</td><td>↑ hidrofilik</td><td>Akumulasi cairan ekstraselular (third spacing)</td></tr>
+            <tr><td>Hipoalbuminemia</td><td>↑</td><td>Fraksi bebas meningkat → lebih banyak obat masuk ke jaringan</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 class="subsection-title">5.4 Sawar Biologis</h2>
+      <ul class="styled">
+        <li><strong>Sawar darah-otak (BBB)</strong>: hanya obat lipofilik, BM kecil, tidak terionisasi yang menembus (mis. diazepam ✓; aminoglikosida ✗)</li>
+        <li><strong>Sawar plasenta</strong>: semipermeabel; sebagian besar obat dapat menembus (pertimbangan penting pada kehamilan)</li>
+        <li><strong>Sawar darah-testis</strong>: mirip BBB, melindungi sel germinal dari xenobiotik</li>
+      </ul>
+    </section>
+
+    <!-- 6. METABOLISME -->
+    <section class="section" id="metabolisme">
+      <div class="section-number">Bagian 06</div>
+      <h1 class="section-title">Faktor-Faktor yang Memengaruhi Metabolisme</h1>
+
+      <p>Metabolisme (biotransformasi) adalah proses enzimatik pengubahan obat menjadi metabolit, umumnya di hati. Metabolisme memengaruhi <strong>klirens hepatik (Cl<sub>H</sub>)</strong> dan <strong>bioavailabilitas oral (F)</strong>.</p>
+
+      <h2 class="subsection-title">6.1 Enzim CYP Utama</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Isoenzim</th><th>Substrat Klinis Penting</th><th>Catatan Klinis</th></tr></thead>
+          <tbody>
+            <tr><td><strong>CYP3A4/5</strong></td><td>Siklosporin, midazolam, statin, nifedipin, eritromisin</td><td>Tersering (~50% obat); diinduksi rifampisin, dihambat azol</td></tr>
+            <tr><td><strong>CYP2D6</strong></td><td>Kodein, tramadol, metoprolol, amitriptilin, haloperidol</td><td>Polimorfisme genetik signifikan (PM vs UM)</td></tr>
+            <tr><td><strong>CYP2C9</strong></td><td>Warfarin, fenitoin, ibuprofen, glipizid</td><td>Polimorfisme penting untuk warfarin (S-warfarin)</td></tr>
+            <tr><td><strong>CYP2C19</strong></td><td>Omeprazol, klopidogrel, diazepam</td><td>PM lebih umum pada populasi Asia (~15–20%)</td></tr>
+            <tr><td><strong>CYP1A2</strong></td><td>Teofilin, kafein, klozapin</td><td>Diinduksi rokok; dosis klozapin perokok lebih tinggi</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 class="subsection-title">6.2 Farmakogenetika — Fenotip Metabolizer</h2>
+
+      <div class="param-grid" style="grid-template-columns: repeat(2, 1fr);">
+        <div class="param-card" style="border-top-color: var(--red-accent);">
+          <div class="param-symbol" style="font-size:16px; color: var(--red-accent);">Poor Metabolizer (PM)</div>
+          <div class="param-desc">Enzim tidak aktif atau aktivitas sangat rendah. Akumulasi obat → risiko toksisitas. Contoh: kodein tidak dikonversi ke morfin pada PM CYP2D6.</div>
+        </div>
+        <div class="param-card" style="border-top-color: var(--green-accent);">
+          <div class="param-symbol" style="font-size:16px; color: var(--green-accent);">Extensive Metabolizer (EM)</div>
+          <div class="param-desc">Metabolisme normal. Fenotip paling umum. Dosis standar umumnya tepat untuk fenotip ini.</div>
+        </div>
+        <div class="param-card" style="border-top-color: var(--teal);">
+          <div class="param-symbol" style="font-size:16px; color: var(--teal);">Intermediate Metabolizer (IM)</div>
+          <div class="param-desc">Metabolisme antara PM dan EM. Perlu pertimbangan penyesuaian dosis untuk obat dengan indeks terapi sempit.</div>
+        </div>
+        <div class="param-card" style="border-top-color: var(--gold);">
+          <div class="param-symbol" style="font-size:16px; color: var(--gold);">Ultra-rapid Metabolizer (UM)</div>
+          <div class="param-desc">Metabolisme sangat cepat → konsentrasi obat sangat rendah, terapi tidak adekuat. Atau: prodrug diaktivasi berlebihan → toksisitas.</div>
+        </div>
+      </div>
+
+      <h2 class="subsection-title">6.3 Induksi dan Inhibisi Enzim</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Mekanisme</th><th>Contoh Agen</th><th>Dampak Klinis</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Induksi CYP</strong> (↑ sintesis enzim)</td><td>Rifampisin, karbamazepin, fenitoin, St. John's Wort</td><td>Metabolisme obat lain dipercepat → konsentrasi ↓ → kegagalan terapi (kontrasepsi oral, warfarin, siklosporin)</td></tr>
+            <tr><td><strong>Inhibisi CYP</strong> (kompetitif/non-kompetitif)</td><td>Ketokonazol, klaritromisin, ritonavir, grapefruit juice</td><td>Metabolisme terhambat → akumulasi obat → toksisitas (statin + azol → rabdomiolisis)</td></tr>
+            <tr><td><strong>Rokok</strong> (induksi CYP1A2)</td><td>PAH dalam asap rokok</td><td>Klirens teofilin &amp; klozapin ↑ pada perokok aktif</td></tr>
+            <tr><td><strong>Alkohol kronik</strong> (induksi CYP2E1)</td><td>Etanol kronik</td><td>Metabolisme parasetamol ke NAPQI toksik meningkat → hepatotoksisitas</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 class="subsection-title">6.4 Penyakit Hati &amp; Faktor Usia</h2>
+      <ul class="styled">
+        <li><strong>Sirosis hati</strong>: massa hepatosit fungsional ↓ → aktivitas CYP ↓ → klirens hepatik ↓</li>
+        <li><strong>Pirau portosistemik</strong>: obat oral bypass hati → bioavailabilitas ↑ (mis. propranolol, morfin, nitrat)</li>
+        <li><strong>Neonatus</strong>: CYP dan UGT belum matur → metabolisme lambat (mis. kloramfenikol → "gray baby syndrome")</li>
+        <li><strong>Usia lanjut</strong>: massa hati dan aliran darah hepatik ↓ ~40% → klirens obat high-extraction ratio menurun bermakna</li>
+      </ul>
+
+      <div class="callout">
+        <div class="callout-label">📌 Catatan: Penilaian Fungsi Hati</div>
+        <p>Tidak ada formula universal penyesuaian dosis untuk penyakit hati (berbeda dengan ginjal yang menggunakan formula Cockcroft-Gault). Penilaian dilakukan secara individual menggunakan <strong>Skor Child-Pugh</strong> atau <strong>MELD</strong>, dikombinasikan dengan data farmakokinetika obat spesifik.</p>
+      </div>
+    </section>
+
+    <!-- 7. ELIMINASI -->
+    <section class="section" id="eliminasi">
+      <div class="section-number">Bagian 07</div>
+      <h1 class="section-title">Faktor-Faktor yang Memengaruhi Eliminasi</h1>
+
+      <p>Eliminasi obat terutama melalui ginjal (ekskresi renal) dan hati (ekskresi bilier). Ekskresi renal adalah jalur utama untuk obat polar dan metabolit yang larut air. Parameter yang terpengaruh: <strong>Klirens Renal (Cl<sub>R</sub>)</strong> dan <strong>Waktu Paruh (t½)</strong>.</p>
+
+      <h2 class="subsection-title">7.1 Proses Ekskresi Renal</h2>
+
+      <div class="formula-box">
+        <div class="formula">Cl<sub style="color:var(--gold-light)">R</sub> = Filtrasi Glomerulus + Sekresi Tubular − Reabsorpsi Tubular</div>
+      </div>
+
+      <ul class="styled">
+        <li><strong>Filtrasi glomerulus</strong>: obat bebas (tidak terikat protein) difiltrasi sesuai GFR (~120 mL/mnt normal)</li>
+        <li><strong>Sekresi tubular aktif</strong>: transporter OAT, OCT, P-gp di tubulus proksimal secara aktif mengeluarkan obat; dapat jenuh dan berinteraksi</li>
+        <li><strong>Reabsorpsi tubular pasif</strong>: obat tidak terionisasi direabsorpsi kembali; bergantung pada pH urin</li>
+      </ul>
+
+      <h2 class="subsection-title">7.2 Penilaian Fungsi Ginjal — Formula Cockcroft-Gault</h2>
+
+      <div class="formula-box">
+        <div class="formula">CrCl = [(140 − <span class="var">Usia</span>) × <span class="var">BB</span>] / [72 × <span class="var">SCr</span>]</div>
+        <div class="formula" style="font-size:13px; color: rgba(255,255,255,0.5); margin-top:4px;">× 0,85 untuk perempuan &nbsp;|&nbsp; Satuan: mL/menit</div>
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Derajat Gangguan (KDIGO)</th><th>eGFR (mL/mnt/1,73m²)</th><th>Implikasi Klinis</th></tr></thead>
+          <tbody>
+            <tr><td>Normal (G1)</td><td>≥ 90</td><td>Tidak perlu penyesuaian dosis (baseline)</td></tr>
+            <tr><td>Ringan (G2)</td><td>60–89</td><td>Umumnya belum perlu penyesuaian dosis</td></tr>
+            <tr><td>Sedang (G3a/G3b)</td><td>30–59</td><td>Perlu penyesuaian untuk obat indeks terapi sempit</td></tr>
+            <tr><td>Berat (G4)</td><td>15–29</td><td>Penyesuaian signifikan; pertimbangkan obat alternatif</td></tr>
+            <tr><td>Gagal ginjal (G5/ESRD)</td><td>&lt; 15</td><td>Hindari nefrotoksik; reduksi dosis drastis atau hindari</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 class="subsection-title">7.3 Pengaruh pH Urin pada Ekskresi</h2>
+      <div class="callout green">
+        <div class="callout-label">💊 Aplikasi Klinis — Alkalinisasi Urin</div>
+        <p>Pada overdosis salisilat atau fenobarbital (asam lemah), pemberian NaHCO₃ intravena untuk mengalkalikan urin (pH 7,5–8) mengubah molekul ke bentuk terionisasi di lumen tubulus → reabsorpsi berkurang → ekskresi renal dipercepat. Ini adalah contoh klasik manipulasi pH urin dalam manajemen overdosis.</p>
+      </div>
+
+      <h2 class="subsection-title">7.4 Faktor Fisiologis &amp; Patologis yang Memengaruhi Eliminasi Renal</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Faktor</th><th>Perubahan CrCl/GFR</th><th>Keterangan</th></tr></thead>
+          <tbody>
+            <tr><td>Usia lanjut</td><td>↓ ~1%/tahun setelah usia 40 thn</td><td>Penurunan GFR dan massa nefron; SCr mungkin normal meski CrCl rendah</td></tr>
+            <tr><td>Kehamilan (T2–T3)</td><td>↑ 40–65%</td><td>Hemodilusi, peningkatan aliran darah ginjal dan GFR</td></tr>
+            <tr><td>Neonatus</td><td>Sangat rendah (2–4 mL/mnt/1,73m²)</td><td>Maturasi ginjal selesai sekitar usia 1–2 tahun</td></tr>
+            <tr><td>Dehidrasi / syok</td><td>↓</td><td>Penurunan aliran darah ginjal → GFR prerenal menurun</td></tr>
+            <tr><td>Nefropati diabetik</td><td>↓ progresif</td><td>Kerusakan glomerulus kronis dan progresif</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 8. MATRIKS -->
+    <section class="section" id="matriks">
+      <div class="section-number">Bagian 08</div>
+      <h1 class="section-title">Matriks Faktor–Parameter Farmakokinetika</h1>
+
+      <p>Tabel ringkasan berikut menampilkan hubungan antara kondisi klinis utama dan parameter farmakokinetika pada model satu kompartemen.</p>
+
+      <div class="legend">
+        <span class="legend-item"><span class="tag-up">↑↑</span> Meningkat signifikan</span>
+        <span class="legend-item"><span class="tag-up">↑</span> Meningkat</span>
+        <span class="legend-item"><span class="tag-down">↓</span> Menurun</span>
+        <span class="legend-item"><span class="tag-down">↓↓</span> Menurun signifikan</span>
+        <span class="legend-item"><span class="tag-neutral">—</span> Tidak signifikan / tidak langsung</span>
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Faktor Klinis</th>
+              <th>kₐ</th>
+              <th>F</th>
+              <th>Vd</th>
+              <th>Cl</th>
+              <th>t½</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Gagal ginjal kronik</strong></td>
+              <td class="tag-neutral">—</td>
+              <td class="tag-up">↑ (bbrp)</td>
+              <td class="tag-up">↑</td>
+              <td class="tag-down">↓↓ (renal)</td>
+              <td class="tag-up">↑↑</td>
+            </tr>
+            <tr>
+              <td><strong>Sirosis hati berat</strong></td>
+              <td class="tag-neutral">—</td>
+              <td class="tag-up">↑ (1st-pass ↓)</td>
+              <td class="tag-up">↑ (asites)</td>
+              <td class="tag-down">↓ (hepatik)</td>
+              <td class="tag-up">↑</td>
+            </tr>
+            <tr>
+              <td><strong>Gagal jantung kongestif</strong></td>
+              <td class="tag-down">↓</td>
+              <td class="tag-down">↓</td>
+              <td class="tag-down">↓</td>
+              <td class="tag-down">↓</td>
+              <td class="tag-up">↑</td>
+            </tr>
+            <tr>
+              <td><strong>Kehamilan (T2–T3)</strong></td>
+              <td class="tag-neutral">—</td>
+              <td class="tag-neutral">—</td>
+              <td class="tag-up">↑</td>
+              <td class="tag-up">↑ (renal)</td>
+              <td class="tag-down">↓</td>
+            </tr>
+            <tr>
+              <td><strong>Usia lanjut (≥65 thn)</strong></td>
+              <td class="tag-neutral">—</td>
+              <td class="tag-neutral">Bervariasi</td>
+              <td class="tag-neutral">↑ lipofilik / ↓ hidrofilik</td>
+              <td class="tag-down">↓</td>
+              <td class="tag-up">↑</td>
+            </tr>
+            <tr>
+              <td><strong>Neonatus</strong></td>
+              <td class="tag-neutral">Bervariasi</td>
+              <td class="tag-neutral">Bervariasi</td>
+              <td class="tag-up">↑ hidrofilik</td>
+              <td class="tag-down">↓↓</td>
+              <td class="tag-up">↑↑</td>
+            </tr>
+            <tr>
+              <td><strong>Obesitas</strong></td>
+              <td class="tag-neutral">—</td>
+              <td class="tag-neutral">—</td>
+              <td class="tag-up">↑↑ lipofilik</td>
+              <td class="tag-neutral">Bervariasi</td>
+              <td class="tag-up">↑ lipofilik</td>
+            </tr>
+            <tr>
+              <td><strong>Hipoalbuminemia</strong></td>
+              <td class="tag-neutral">—</td>
+              <td class="tag-neutral">—</td>
+              <td class="tag-up">↑</td>
+              <td class="tag-neutral">Bervariasi</td>
+              <td class="tag-neutral">Bervariasi</td>
+            </tr>
+            <tr>
+              <td><strong>Induksi enzim (Rifampisin)</strong></td>
+              <td class="tag-neutral">—</td>
+              <td class="tag-down">↓ (1st-pass ↑)</td>
+              <td class="tag-neutral">—</td>
+              <td class="tag-up">↑ hepatik</td>
+              <td class="tag-down">↓</td>
+            </tr>
+            <tr>
+              <td><strong>Inhibisi enzim (Azol)</strong></td>
+              <td class="tag-neutral">—</td>
+              <td class="tag-up">↑ (1st-pass ↓)</td>
+              <td class="tag-neutral">—</td>
+              <td class="tag-down">↓ hepatik</td>
+              <td class="tag-up">↑</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 9. LATIHAN -->
+    <section class="section" id="latihan">
+      <div class="section-number">Bagian 09</div>
+      <h1 class="section-title">Latihan Soal</h1>
+      <p>Jawab pertanyaan berikut untuk menguji pemahaman Anda. Klik <em>Tampilkan Kunci Jawaban</em> untuk melihat poin-poin jawaban.</p>
+
+      <div class="quiz-item">
+        <div class="quiz-number">Soal 01</div>
+        <div class="quiz-question">Seorang pasien laki-laki 72 tahun dengan gagal ginjal kronik stadium 4 mendapat terapi aminoglikosida. Sebutkan minimal 3 faktor pada pasien ini yang dapat memengaruhi parameter farmakokinetika aminoglikosida, dan parameter apa yang terdampak.</div>
+        <button class="btn-reveal" onclick="revealAnswer(this)">Tampilkan Kunci Jawaban</button>
+        <div class="quiz-answer">
+          <strong>Faktor &amp; parameter terdampak:</strong>
+          <ul class="styled" style="margin-top:8px;">
+            <li><strong>Penurunan GFR</strong> (stadium G4, eGFR 15–29): Cl renal aminoglikosida ↓ → t½ ↑↑ → risiko akumulasi dan nefrotoksisitas/ototoksisitas</li>
+            <li><strong>Usia lanjut</strong> (72 tahun): penurunan massa otot → SCr mungkin normal palsu; GFR sebenarnya lebih rendah dari perkiraan rumus Cockcroft-Gault; juga retensi cairan dan ↑ Vd hidrofilik seperti aminoglikosida</li>
+            <li><strong>Kemungkinan hipoalbuminemia</strong> (pada CKD): Vd dan fraksi bebas obat dapat berubah</li>
+            <li><strong>Penurunan aliran darah ginjal</strong>: sekresi tubular aktif aminoglikosida berkurang</li>
+          </ul>
+          <p style="margin-top:8px;">→ Diperlukan penyesuaian interval dosis (extended interval dosing) dan pemantauan kadar aminoglikosida (TDM).</p>
+        </div>
+      </div>
+
+      <div class="quiz-item">
+        <div class="quiz-number">Soal 02</div>
+        <div class="quiz-question">Fenitoin memiliki ikatan albumin 90% dan Vd 0,5–0,8 L/kg. Seorang pasien sirosis memiliki albumin serum 2,0 g/dL. Bagaimana kondisi ini memengaruhi interpretasi kadar fenitoin total dalam plasma?</div>
+        <button class="btn-reveal" onclick="revealAnswer(this)">Tampilkan Kunci Jawaban</button>
+        <div class="quiz-answer">
+          <ul class="styled">
+            <li>Hipoalbuminemia → fraksi bebas fenitoin meningkat (dari ~10% menjadi bisa >20%)</li>
+            <li>Kadar fenitoin <em>total</em> dalam plasma tampak rendah, namun kadar fraksi bebas yang aktif farmakologis bisa normal atau meningkat</li>
+            <li>Penyesuaian dosis berdasarkan kadar total tanpa koreksi → berisiko overdosis</li>
+            <li>Gunakan rumus Winter-Tozer: Adjusted level = Observed level / [(0,2 × albumin pasien) + 0,1] untuk koreksi interpretasi [catatan : 0,25 (Anderson) pada pasien non-ESRD]</li>
+            <li>Idealnya: ukur kadar fenitoin bebas (unbound) bila tersedia</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="quiz-item">
+        <div class="quiz-number">Soal 03</div>
+        <div class="quiz-question">Pasien TB mendapat rifampisin bersamaan dengan warfarin. Sebutkan mekanisme interaksi dan dampak terhadap parameter farmakokinetika warfarin.</div>
+        <button class="btn-reveal" onclick="revealAnswer(this)">Tampilkan Kunci Jawaban</button>
+        <div class="quiz-answer">
+          <ul class="styled">
+            <li><strong>Mekanisme</strong>: Rifampisin adalah induktor kuat CYP2C9 dan CYP3A4 (enzim yang memetabolisme warfarin, terutama S-warfarin via CYP2C9)</li>
+            <li>Induksi enzim → sintesis CYP2C9 meningkat → metabolisme warfarin dipercepat</li>
+            <li><strong>Dampak farmakokinetika warfarin</strong>: Cl hepatik warfarin ↑ → konsentrasi plasma warfarin ↓ → t½ ↓ → AUC ↓ → efek antikoagulan melemah (INR menurun)</li>
+            <li><strong>Implikasi klinis</strong>: risiko thrombosis/emboli; dosis warfarin perlu ditingkatkan signifikan selama terapi rifampisin dan diturunkan kembali saat rifampisin dihentikan (efek induksi mereda dalam 2–4 minggu)</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="quiz-item">
+        <div class="quiz-number">Soal 04</div>
+        <div class="quiz-question">Sebutkan 4 kondisi fisiologis (bukan penyakit) yang dapat meningkatkan volume distribusi obat lipofilik, beserta mekanisme singkatnya.</div>
+        <button class="btn-reveal" onclick="revealAnswer(this)">Tampilkan Kunci Jawaban</button>
+        <div class="quiz-answer">
+          <ul class="styled">
+            <li><strong>Obesitas</strong>: massa jaringan lemak sangat besar → akumulasi obat lipofilik meningkat masif</li>
+            <li><strong>Usia lanjut</strong>: proporsi jaringan lemak meningkat seiring usia (dari ~15% ke ~30–40% BB)</li>
+            <li><strong>Kehamilan</strong>: deposisi lemak gestasional meningkat, ditambah kompartemen plasenta dan janin</li>
+            <li><strong>Hipoalbuminemia fisiologis</strong> (mis. pada kehamilan): fraksi bebas obat ↑ → lebih banyak obat terdistribusi ke jaringan → Vd tampak lebih besar</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="quiz-item">
+        <div class="quiz-number">Soal 05</div>
+        <div class="quiz-question">Seorang wanita hamil 28 minggu memerlukan terapi antibiotik. Sebutkan minimal 3 perubahan farmakokinetika pada kehamilan yang perlu dipertimbangkan dalam penyesuaian dosis.</div>
+        <button class="btn-reveal" onclick="revealAnswer(this)">Tampilkan Kunci Jawaban</button>
+        <div class="quiz-answer">
+          <ul class="styled">
+            <li><strong>↑ Vd</strong>: hemodilusi (volume plasma +40–50%), edema jaringan, kompartemen janin &amp; cairan amnion → konsentrasi plasma obat lebih rendah untuk dosis yang sama</li>
+            <li><strong>↑ Klirens renal</strong>: GFR meningkat 40–65% → eliminasi obat hidrofilik (mis. ampisilin, sefazolin, aminoglikosida) lebih cepat → t½ lebih pendek → perlu dosis lebih tinggi atau interval lebih pendek</li>
+            <li><strong>↓ Konsentrasi albumin</strong>: akibat hemodilusi → fraksi bebas obat yang terikat albumin meningkat → perubahan Vd dan potensi efek farmakologis</li>
+            <li><strong>↓ Motilitas GI</strong> (progesteron): absorpsi lebih lambat, t<sub>max</sub> memanjang → perlu dipertimbangkan untuk antibiotik oral</li>
+            <li><strong>Pertimbangan lintas plasenta</strong>: sebagian besar antibiotik menembus plasenta; pilih obat dengan profil keamanan janin yang terbukti</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- 10. REFERENSI -->
+    <section class="section" id="referensi">
+      <div class="section-number">Bagian 10</div>
+      <h1 class="section-title">Referensi</h1>
+      <p style="margin-bottom:20px;"></p>
+
+      <p class="apa-ref">Bauer, L. A. (2023). <em>Applied clinical pharmacokinetics</em> (4th ed.). McGraw-Hill Education.</p>
+      <p class="apa-ref">Brunton, L. L., Knollmann, B. C., &amp; Hilal-Dandan, R. (Eds.). (2023). <em>Goodman &amp; Gilman's the pharmacological basis of therapeutics</em> (14th ed.). McGraw-Hill Education.</p>
+      <p class="apa-ref">Burton, M. E., Shaw, L. M., Schentag, J. J., &amp; Evans, W. E. (Eds.). (2006). <em>Applied pharmacokinetics &amp; pharmacodynamics: Principles of therapeutic drug monitoring</em> (4th ed.). Lippincott Williams &amp; Wilkins.</p>
+      <p class="apa-ref">Katzung, B. G., &amp; Trevor, A. J. (Eds.). (2021). <em>Basic and clinical pharmacology</em> (15th ed.). McGraw-Hill Education.</p>
+      <p class="apa-ref">Matzke, G. R., Aronoff, G. R., Atkinson, A. J., Jr., &amp; Murray, P. T. (2011). Drug dosing consideration in patients with acute and chronic kidney disease — A clinical update from KDIGO. <em>Kidney International</em>, <em>80</em>(11), 1122–1137. https://doi.org/10.1038/ki.2011.322</p>
+      <p class="apa-ref">Rowland, M., &amp; Tozer, T. N. (2011). <em>Clinical pharmacokinetics and pharmacodynamics: Concepts and applications</em> (4th ed.). Lippincott Williams &amp; Wilkins.</p>
+      <p class="apa-ref">Shargel, L., Wu-Pong, S., &amp; Yu, A. B. C. (2016). <em>Applied biopharmaceutics &amp; pharmacokinetics</em> (7th ed.). McGraw-Hill Education.</p>
+      <p class="apa-ref">Winter, M. E. (2010). <em>Basic clinical pharmacokinetics</em> (5th ed.). Lippincott Williams &amp; Wilkins.</p>
+    </section>
+
+    <!-- GLOSARIUM -->
+    <section class="section" id="glosarium">
+      <div class="section-number">Bagian 11</div>
+      <h1 class="section-title">Glosarium</h1>
+
+      <div class="glossary-grid">
+        <div class="glossary-item">
+          <div class="glossary-term">Bioavailabilitas (F)</div>
+          <p class="glossary-def">Fraksi dosis obat yang mencapai sirkulasi sistemik dalam bentuk tidak berubah setelah pemberian melalui rute non-intravena.</p>
+        </div>
+        <div class="glossary-item">
+          <div class="glossary-term">First-Pass Effect</div>
+          <p class="glossary-def">Metabolisme obat di dinding usus dan/atau hati sebelum mencapai sirkulasi sistemik, yang mengurangi bioavailabilitas oral.</p>
+        </div>
+        <div class="glossary-item">
+          <div class="glossary-term">Klirens (Cl)</div>
+          <p class="glossary-def">Volume plasma yang dibersihkan dari obat per satuan waktu oleh seluruh mekanisme eliminasi gabungan.</p>
+        </div>
+        <div class="glossary-item">
+          <div class="glossary-term">Volume Distribusi (Vd)</div>
+          <p class="glossary-def">Volume cairan hipotetik di mana obat tampak terdistribusi merata jika konsentrasinya sama dengan di plasma.</p>
+        </div>
+        <div class="glossary-item">
+          <div class="glossary-term">Polimorfisme Genetik</div>
+          <p class="glossary-def">Variasi sekuens DNA yang memengaruhi ekspresi atau fungsi enzim, menghasilkan perbedaan fenotip metabolisme obat antarindividu.</p>
+        </div>
+        <div class="glossary-item">
+          <div class="glossary-term">Waktu Paruh (t½)</div>
+          <p class="glossary-def">Waktu yang dibutuhkan konsentrasi obat dalam plasma untuk berkurang 50% dari nilai awalnya.</p>
+        </div>
+        <div class="glossary-item">
+          <div class="glossary-term">Induksi Enzim</div>
+          <p class="glossary-def">Peningkatan sintesis enzim metabolisme (terutama CYP) akibat paparan substrat atau xenobiotik, mempercepat metabolisme obat lain.</p>
+        </div>
+        <div class="glossary-item">
+          <div class="glossary-term">GFR (Glomerular Filtration Rate)</div>
+          <p class="glossary-def">Laju filtrasi plasma oleh glomeruli ginjal, digunakan sebagai ukuran fungsi ginjal (normal ~90–120 mL/mnt/1,73m²).</p>
+        </div>
+        <div class="glossary-item">
+          <div class="glossary-term">Hipoalbuminemia</div>
+          <p class="glossary-def">Kondisi kadar albumin plasma di bawah normal (&lt;3,5 g/dL) yang dapat meningkatkan fraksi bebas obat-obat yang terikat albumin.</p>
+        </div>
+        <div class="glossary-item">
+          <div class="glossary-term">Model Satu Kompartemen</div>
+          <p class="glossary-def">Model farmakokinetika yang memperlakukan tubuh sebagai satu unit homogen di mana obat terdistribusi instan dan merata ke seluruh jaringan.</p>
+        </div>
+      </div>
+
+      <div class="divider">Selesai</div>
+      <p style="text-align:center; color: var(--text-muted); font-size:13px; font-style:italic;">Modul Farmakokinetika Klinik — Program Studi S1 Farmasi Semester 5 &nbsp;·&nbsp; 2024/2025</p>
+    </section>
+
+  </div><!-- end content-wrapper -->
+</main>
+
+<!-- Back to top -->
+<button class="back-top" id="backTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Kembali ke atas">↑</button>
+
+<script>
+  // Progress bar
+  window.addEventListener('scroll', () => {
+    const scrollTop = document.documentElement.scrollTop;
+    const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    const progress = scrollHeight > 0 ? (scrollTop / scrollHeight) * 100 : 0;
+    document.getElementById('progressFill').style.width = progress + '%';
+
+    // Back to top
+    const btn = document.getElementById('backTop');
+    btn.classList.toggle('visible', scrollTop > 400);
+  });
+
+  // Active nav
+  const sections = document.querySelectorAll('section[id]');
+  const navItems = document.querySelectorAll('.nav-item');
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        navItems.forEach(n => {
+          n.classList.toggle('active', n.getAttribute('href') === '#' + entry.target.id);
+        });
+      }
+    });
+  }, { rootMargin: '-30% 0px -65% 0px' });
+
+  sections.forEach(s => observer.observe(s));
+
+  // Accordion
+  function toggleAcc(btn) {
+    const body = btn.nextElementSibling;
+    const isOpen = btn.classList.contains('open');
+    document.querySelectorAll('.accordion-btn.open').forEach(b => {
+      b.classList.remove('open');
+      b.nextElementSibling.classList.remove('open');
+    });
+    if (!isOpen) {
+      btn.classList.add('open');
+      body.classList.add('open');
+    }
+  }
+
+  // Quiz reveal
+  function revealAnswer(btn) {
+    const ans = btn.nextElementSibling;
+    if (ans.classList.contains('revealed')) {
+      ans.classList.remove('revealed');
+      btn.textContent = 'Tampilkan Kunci Jawaban';
+    } else {
+      ans.classList.add('revealed');
+      btn.textContent = 'Sembunyikan Jawaban';
+    }
+  }
+
+  // Mobile sidebar
+  function toggleSidebar() {
+    document.getElementById('sidebar').classList.toggle('open');
+  }
+
+  // Smooth scroll offset for fixed elements
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      e.preventDefault();
+      const target = document.querySelector(a.getAttribute('href'));
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        document.getElementById('sidebar').classList.remove('open');
+      }
+    });
+  });
+</script>
+</body>
+</html>
